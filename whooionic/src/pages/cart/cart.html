@@ -1,0 +1,78 @@
+<ion-header>
+
+    <ion-navbar style="text-align: center;">
+        <ion-title>Carrito de compras</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <ion-card *ngIf="cartItems.length === 0 && !loading">
+        <ion-card-header>
+            Carrito Vacio
+        </ion-card-header>
+        <ion-card-content>
+            <p>Continúa comprando en nuestra tienda</p>
+            <ion-icon name="cart"></ion-icon>
+        </ion-card-content>
+    </ion-card>
+    <ion-list>
+        <ion-item *ngFor="let item of cartItems, let i = index" text-wrap>
+            <ion-thumbnail item-left>
+                <img *ngIf="item.product.images.length > 0" src="{{ item.product.images[0].src }}">
+            </ion-thumbnail>
+
+            <h2>{{ item.product.name }}</h2>
+            <p>
+                {{ item.qty }} x <span [innerHTML]="item.product.price_html"></span>
+            </p>
+
+
+            <button color="danger" ion-button icon clear item-right (click)="removeItem(item, i)">
+                <ion-icon name="trash"></ion-icon>
+            </button>
+        </ion-item>
+    </ion-list>
+
+    <ion-grid *ngIf="cartItems.length !== 0 && !loading">
+        <ion-card>
+            <ion-grid>
+                <ion-row>
+                    <ion-col col-2>
+
+                    </ion-col>
+                    <ion-col col-4>
+                        <b>TOTAL</b>
+                    </ion-col>
+                    <ion-col col-3>
+
+                    </ion-col>
+                    <ion-col col-3 style="text-align: right;">
+                        <b *ngIf="total">$ {{ total }}</b>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-card>
+    </ion-grid>
+
+</ion-content>
+
+<ion-footer>
+    <ion-toolbar>
+        <ion-grid>
+            <ion-row>
+                <ion-col>
+                    <button ion-button color="danger" outline block (click)="closeModal()">
+                      Atras
+                    </button>
+                </ion-col>
+                <ion-col *ngIf="!cartEmptyMessage">
+                    <button ion-button color="danger" block (click)="checkout()">
+                      Finalizar
+                    </button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-toolbar>
+</ion-footer>

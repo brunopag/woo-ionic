@@ -1,0 +1,59 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>Calcular Envío</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <!-- <ion-list> -->
+    <!-- <ion-item *ngFor="let method of shippingMethods" text-wrap>
+            <h2>{{ method.method_title }}</h2>
+            <p>
+                <span *ngIf="method.settings.cost.value.length > 0">${{ method.settings.cost.value }}</span>
+                <span *ngIf="method.settings.cost.value.length === 0">GRATIS!</span>
+            </p>
+
+            <button ion-button icon clear item-right>
+                        <ion-icon name="arrow-forward"></ion-icon>
+                    </button>
+        </ion-item> -->
+
+    <!-- <h3>Seleccione el método de envío que desea: </h3>
+
+        <ion-item *ngFor="let method of shippingMethods" text-wrap>
+            <ion-label>{{ method.method_title }}
+                <span *ngIf="method.settings.cost.value.length > 0">${{ method.settings.cost.value }}</span>
+                <span *ngIf="method.settings.cost.value.length === 0">GRATIS!</span>
+            </ion-label>
+            <p>
+                <span *ngIf="method.settings.cost.value.length > 0">${{ method.settings.cost.value }}</span>
+                <span *ngIf="method.settings.cost.value.length === 0">GRATIS!</span>
+            </p>
+            <ion-checkbox color="dark" checked="false"></ion-checkbox>
+        </ion-item> -->
+
+
+    <!-- </ion-list> -->
+
+    <ion-list radio-group>
+        <ion-list-header>
+            Seleccione el método de envío que desea:
+        </ion-list-header>
+
+        <ion-item *ngFor="let method of shippingMethods">
+            <ion-label>{{ method.method_title }}
+                <span *ngIf="method.settings.cost.value.length > 0">(${{ method.settings.cost.value }})</span>
+                <span *ngIf="method.settings.cost.value.length === 0">(GRATIS!)</span></ion-label>
+            <ion-radio checked="false" value="{{ method.id }}"></ion-radio>
+        </ion-item>
+
+    </ion-list>
+
+</ion-content>
+
+<ion-footer>
+    <button color="danger" ion-button block (click)="continue()">Continuar</button>
+</ion-footer>

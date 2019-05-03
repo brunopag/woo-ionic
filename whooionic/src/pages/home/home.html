@@ -1,0 +1,78 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+        <ion-title *ngIf="_usersProvider.user">{{ _usersProvider.user.storeTitle }}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-grid>
+        <ion-row>
+            <ion-slides #productSlides pager *ngIf="carrouselProducts.length > 0">
+                <ion-slide *ngFor="let product of carrouselProducts">
+                    <ion-card no-padding>
+                        <h1 padding center>{{ product.name }}</h1>
+                        <p center padding [innerHTML]="product.short_description"></p>
+                        <img *ngIf="product.images" src="{{ product.images[0].src }}" alt="" style="height: 200px;">
+                    </ion-card>
+                </ion-slide>
+            </ion-slides>
+
+            <ion-slides #categoriesSlides pager *ngIf="carrouselCategories.length > 0">
+                <ion-slide *ngFor="let category of carrouselCategories">
+                    <ion-card>
+                        <h1>{{ category.name }}</h1>
+                        <p *ngIf="category.description" center padding [innerHTML]="category.description"></p>
+                        <div style="text-align: center;">
+                            <img *ngIf="category.image" src="{{ category.image.src }}" alt="" style="height: 200px;">
+                        </div>
+                        <div center style="padding-top: 10px;padding-bottom: 30px;">
+                            <button ion-button (click)="openCategory(category)">Ver</button>
+                        </div>
+                    </ion-card>
+                </ion-slide>
+            </ion-slides>
+        </ion-row>
+
+        <div *ngIf="category">
+            <div padding>
+                <ion-segment [(ngModel)]="category">
+                    <ion-segment-button *ngFor="let category of categories" value={{category.category.slug}}>
+                        {{ category.category.name }}
+                    </ion-segment-button>
+                </ion-segment>
+            </div>
+            <div [ngSwitch]="category">
+                <div *ngFor="let category of categories">
+                    <ion-list *ngSwitchCase=category.category.slug>
+                        <ion-item *ngFor="let product of category.products" text-wrap (click)="openProductDetails(product)">
+                            <ion-thumbnail item-left>
+                                <img *ngIf="product.images.length > 0" src="{{ product.images[0].src }}">
+                            </ion-thumbnail>
+                            <h2>{{ product.name }}</h2>
+                            <p>
+                                <span [innerHTML]="product.short_description.substr(0, 50)"></span>
+                                <span [innerHTML]="product.price_html"></span>
+                            </p>
+
+                            <button ion-button icon clear item-right>
+                                <ion-icon name="arrow-forward"></ion-icon>
+                            </button>
+                        </ion-item>
+
+                        <button ion-button block *ngIf="category.products.length === 10" (click)="openCategory(category.category)">
+                             Ver Más {{ category.category.name }}
+                        </button>
+                    </ion-list>
+
+                </div>
+            </div>
+        </div>
+
+
+    </ion-grid>
+
+</ion-content>

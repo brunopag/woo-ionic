@@ -1,0 +1,7 @@
+{
+  "name": "whooionic",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}

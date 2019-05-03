@@ -1,0 +1,111 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>Finalizar Compra</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <ion-list>
+        <ion-item-divider color="primary">Detalles Personales</ion-item-divider>
+        <ion-item>
+            <ion-label>Nombre</ion-label>
+            <ion-input type="text" [(ngModel)]="newOrder.first_name"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>Apellido</ion-label>
+            <ion-input type="text" [(ngModel)]="newOrder.last_name"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>Email</ion-label>
+            <ion-input type="text" [(ngModel)]="newOrder.email" (blur)="checkEmail()" [ngClass]="{'invalid': emailValid !== 'pristine' && !emailValid}"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>Username</ion-label>
+            <ion-input type="text" [(ngModel)]="newOrder.username"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="!login">
+            <ion-label>Password</ion-label>
+            <ion-input type="password" [(ngModel)]="newOrder.password"></ion-input>
+        </ion-item>
+
+        <ion-item-divider color="primary">Detalles de Facturación</ion-item-divider>
+        <ion-item>
+            <ion-label>Dirección Línea 1</ion-label>
+            <ion-input type="text" [(ngModel)]="newOrder.billing.address_1"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Dirección Línea 2</ion-label>
+            <ion-input type="text" [(ngModel)]="newOrder.billing.address_2"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>País</ion-label>
+            <ion-select [(ngModel)]="newOrder.billing.country" (ionChange)="loadStates(newOrder.billing.country)">
+                <ion-option [value]="country.code" *ngFor="let country of countries">{{ country.name }}</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label>Provincia</ion-label>
+            <ion-select [(ngModel)]="newOrder.billing.state">
+                <ion-option [value]="state.code" *ngFor="let state of states">{{ state.name }}</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label>Ciudad</ion-label>
+            <ion-input type="text" [(ngModel)]="newOrder.billing.city"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Codigo Postal</ion-label>
+            <ion-input type="number" [(ngModel)]="newOrder.billing.postcode"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Teléfono</ion-label>
+            <ion-input type="tel" [(ngModel)]="newOrder.billing.phone"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Mismos datos de Envío</ion-label>
+            <ion-checkbox (ionChange)="setBillingToShipping()" checked="{{ sameBillingShipping }}"></ion-checkbox>
+        </ion-item>
+
+        <ion-item-divider color="primary" *ngIf="!sameBillingShipping">Detalles de Envío</ion-item-divider>
+        <ion-item *ngIf="!sameBillingShipping">
+            <ion-label>Dirección Línea 1</ion-label>
+            <ion-input type="text" [(ngModel)]="newOrder.shipping.address_1"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="!sameBillingShipping">
+            <ion-label>Dirección Línea 2</ion-label>
+            <ion-input type="text" [(ngModel)]="newOrder.shipping.address_2"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="!sameBillingShipping">
+            <ion-label>País</ion-label>
+            <ion-select [(ngModel)]="newOrder.shipping.country" (ionChange)="loadStates2(newOrder.shipping.country)">
+                <ion-option [value]="country.code" *ngFor="let country of countries">{{ country.name }}</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item *ngIf="!sameBillingShipping">
+            <ion-label>Provincia</ion-label>
+            <ion-select [(ngModel)]="newOrder.shipping.state">
+                <ion-option [value]="state2.code" *ngFor="let state2 of states2">{{ state2.name }}</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item *ngIf="!sameBillingShipping">
+            <ion-label>Ciudad</ion-label>
+            <ion-input type="text" [(ngModel)]="newOrder.shipping.city"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="!sameBillingShipping">
+            <ion-label>Codigo Postal</ion-label>
+            <ion-input type="number" [(ngModel)]="newOrder.shipping.postcode"></ion-input>
+        </ion-item>
+
+    </ion-list>
+</ion-content>
+
+<ion-footer>
+    <button color="danger" ion-button block (click)="continue()">Continuar</button>
+</ion-footer>

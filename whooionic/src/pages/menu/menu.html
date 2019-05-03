@@ -1,0 +1,57 @@
+<ion-menu [content]="content">
+    <!-- <ion-header color="secondary">
+        <ion-toolbar>
+            <ion-title>Menu</ion-title>
+        </ion-toolbar>
+    </ion-header> -->
+
+    <ion-content>
+        <ion-card style="margin:0px;border:none;width: 100%;">
+            <img src="../../assets/logo-2.png" style="width: 70%; margin:auto;margin-bottom:15px;margin-top:15px;">
+        </ion-card>
+        <ion-list>
+            <ion-item-divider>
+                Shopping
+            </ion-item-divider>
+            <button menuClose ion-item (click)="goHome()">
+                    <ion-icon name="home" item-left large></ion-icon>
+                    Home
+                </button>
+
+            <button menuClose ion-item *ngFor="let category of categories" (click)="openCategory(category)">
+                <ion-icon name="ios-albums-outline" item-left large></ion-icon>
+                {{ category.name }}
+                <p>{{ category.description }}</p>
+            </button>
+
+            <ion-item-divider>
+                Cuenta
+            </ion-item-divider>
+            <button menuClose ion-item (click)="openPage('registro')" *ngIf="!customerLoged">
+                        <ion-icon name="person-add" item-left large></ion-icon>
+                        Registro
+                </button>
+            <button menuClose ion-item (click)="openPage('login')" *ngIf="!customerLoged">
+                        <ion-icon name="log-in" item-left large></ion-icon>
+                        Login
+                </button>
+
+            <button menuClose ion-item *ngIf="customerLoged">
+                        <ion-icon name="contact" item-left large></ion-icon>
+                        <h2>{{ customer.firstname + ' ' + customer.lastname }}</h2>
+                        <p>Bienvenido</p>
+                </button>
+            <button menuClose ion-item (click)="openPage('cart')" *ngIf="customerLoged">
+                        <ion-icon name="cart" item-left large></ion-icon>
+                        Carrito
+                </button>
+            <button menuClose ion-item (click)="openPage('logout')" *ngIf="customerLoged">
+                        <ion-icon name="log-out" item-left large></ion-icon>
+                        Cerrar Sesión
+                </button>
+        </ion-list>
+    </ion-content>
+
+</ion-menu>
+
+<ion-nav [root]="homePage" #content></ion-nav>
